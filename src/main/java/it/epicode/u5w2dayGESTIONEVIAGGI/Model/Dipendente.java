@@ -18,6 +18,7 @@ public class Dipendente {
     private String username;
     private LocalDate dataNascita;
     private String email;
+    private String urlImmagine;
 
     @JsonIgnore
     @OneToMany(mappedBy = "dipendente")
