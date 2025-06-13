@@ -14,4 +14,5 @@ public class PrenotazioneDto {
     @NotNull(message = "La data della richiesta non può essere nulla")
     private LocalDate dataRichiesta;
     private int viaggioId;
+    private int dipendenteId;
 }

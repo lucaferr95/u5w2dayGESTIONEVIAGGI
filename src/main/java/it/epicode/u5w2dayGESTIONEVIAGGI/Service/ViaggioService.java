@@ -35,6 +35,8 @@ public class ViaggioService {
         Viaggio viaggio= new Viaggio();
         viaggio.setDestinazione(viaggioDto.getDestinazione());
         viaggio.setDataViaggio(viaggioDto.getDataViaggio());
+
+        //setto la mia email per farmi arrivare la conferma
         sendMail("lucaferr95@gmail.com");
         return viaggioRepository.save(viaggio);
     }

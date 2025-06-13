@@ -27,4 +27,14 @@ public class CustomizedExceptionHandler {
         error.setDataErrore(LocalDateTime.now());
         return error;
     }
+    //Aggiungo l'eccezione personalizzata per le prenotazioni
+    @ExceptionHandler(PrenotazioneGiaEsistenteException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handlePrenotazioneGiaEsistente(PrenotazioneGiaEsistenteException e) {
+        ApiError error = new ApiError();
+        error.setMessage(e.getMessage());
+        error.setDataErrore(LocalDateTime.now());
+        return error;
+    }
+
 }

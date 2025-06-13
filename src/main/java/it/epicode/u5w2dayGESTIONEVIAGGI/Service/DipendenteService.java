@@ -36,6 +36,7 @@ public class DipendenteService {
         dipendente.setEmail(dipendenteDto.getEmail());
         dipendente.setUsername(dipendenteDto.getUsername());
 
+        //setto la mia email per farmi arrivare la conferma
         sendMail("lucaferr95@gmail.com");
 
         return dipendenteRepository.save(dipendente);

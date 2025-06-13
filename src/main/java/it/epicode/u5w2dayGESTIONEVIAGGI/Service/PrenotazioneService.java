@@ -3,15 +3,19 @@ package it.epicode.u5w2dayGESTIONEVIAGGI.Service;
 import com.cloudinary.Cloudinary;
 import it.epicode.u5w2dayGESTIONEVIAGGI.Dto.PrenotazioneDto;
 import it.epicode.u5w2dayGESTIONEVIAGGI.Exception.NotFoundException;
+import it.epicode.u5w2dayGESTIONEVIAGGI.Exception.PrenotazioneGiaEsistenteException;
+import it.epicode.u5w2dayGESTIONEVIAGGI.Model.Dipendente;
 import it.epicode.u5w2dayGESTIONEVIAGGI.Model.Prenotazione;
 import it.epicode.u5w2dayGESTIONEVIAGGI.Model.Viaggio;
 import it.epicode.u5w2dayGESTIONEVIAGGI.Repository.PrenotazioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -28,14 +32,30 @@ public class PrenotazioneService {
 
     @Autowired
     private JavaMailSenderImpl javaMailSender;
-
+    @Autowired
+    private DipendenteService dipendenteService;
     //metodo save
-    public Prenotazione savePrenotazione(PrenotazioneDto prenotazioneDto) throws NotFoundException {
+    public Prenotazione savePrenotazione(PrenotazioneDto prenotazioneDto) throws NotFoundException, PrenotazioneGiaEsistenteException {
         Viaggio viaggio = viaggioService.getViaggio(prenotazioneDto.getViaggioId());
+        // Verifica se esiste già una prenotazione per quel dipendente e quella data
+        Optional<Prenotazione> prenotazioneEsistente = prenotazioneRepository
+                .findByDipendenteIdAndDataRichiesta(prenotazioneDto.getDipendenteId(), prenotazioneDto.getDataRichiesta());
+
+        if (prenotazioneEsistente.isPresent()) {
+            throw new PrenotazioneGiaEsistenteException("Hai già una prenotazione per questa data");
+        }
+
 
         Prenotazione prenotazione = new Prenotazione();
         prenotazione.setDataRichiesta(prenotazioneDto.getDataRichiesta());
         prenotazione.setViaggio(viaggio);
+
+        //recupero il dipendente
+
+        Dipendente dipendente = dipendenteService.getDipendente(prenotazioneDto.getDipendenteId());
+        prenotazione.setDipendente(dipendente);
+
+        //setto la mia email per farmi arrivare la conferma
         sendMail("lucaferr95@gmail.com");
         return prenotazioneRepository.save(prenotazione);
     }
@@ -85,4 +105,6 @@ public class PrenotazioneService {
 
         javaMailSender.send(message);
     }
+
+
 }
