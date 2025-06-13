@@ -21,6 +21,7 @@ public class Viaggio {
     private StatoViaggio statoViaggio;
 
     @OneToMany(mappedBy = "viaggio")
+    @JsonIgnore
     private List <Prenotazione> prenotazioni;
 
 }

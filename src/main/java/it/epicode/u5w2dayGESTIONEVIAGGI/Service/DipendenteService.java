@@ -35,7 +35,7 @@ public class DipendenteService {
         dipendente.setCognome(dipendenteDto.getCognome());
         dipendente.setEmail(dipendenteDto.getEmail());
         dipendente.setUsername(dipendenteDto.getUsername());
-
+        dipendente.setDataNascita(dipendenteDto.getDataNascita());
         //setto la mia email per farmi arrivare la conferma
         sendMail("lucaferr95@gmail.com");
 
@@ -63,6 +63,7 @@ public class DipendenteService {
         dipendenteDaAggiornare.setCognome(dipendenteDto.getCognome());
         dipendenteDaAggiornare.setEmail(dipendenteDto.getEmail());
         dipendenteDaAggiornare.setUsername(dipendenteDto.getUsername());
+        dipendenteDaAggiornare.setDataNascita(dipendenteDto.getDataNascita());
         return dipendenteRepository.save(dipendenteDaAggiornare);
 
     }

@@ -1,5 +1,6 @@
 package it.epicode.u5w2dayGESTIONEVIAGGI.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 

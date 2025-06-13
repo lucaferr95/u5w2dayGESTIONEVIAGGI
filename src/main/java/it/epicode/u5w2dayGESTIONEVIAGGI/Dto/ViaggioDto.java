@@ -1,5 +1,6 @@
 package it.epicode.u5w2dayGESTIONEVIAGGI.Dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import it.epicode.u5w2dayGESTIONEVIAGGI.Enum.StatoViaggio;
 import it.epicode.u5w2dayGESTIONEVIAGGI.Model.Dipendente;
 import jakarta.persistence.EnumType;
@@ -16,6 +17,7 @@ public class ViaggioDto {
     @NotEmpty(message = "Il campo destinazione non può essere nullo o vuoto")
     private String destinazione;
     @NotNull(message = "la data del viaggio non può essere nulla")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataViaggio;
 
 }

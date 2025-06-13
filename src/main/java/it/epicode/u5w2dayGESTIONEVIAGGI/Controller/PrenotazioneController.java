@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/prenotazioni")
@@ -82,9 +83,13 @@ public class PrenotazioneController {
     }
     //metodo patch solo per cambiare le preferenze
     @PatchMapping("/{id}/preferenze")
-    public Prenotazione patchPreferenze(@PathVariable int id, @RequestBody String nuovePreferenze) throws NotFoundException {
+    public Prenotazione patchPreferenze(@PathVariable int id, @RequestBody Map<String, String> body)
+            throws NotFoundException {
+        String nuovePreferenze = body.get("preferenze");
         Prenotazione prenotazione = prenotazioneService.getPrenotazione(id);
         prenotazione.setPreferenze(nuovePreferenze);
         return prenotazioneRepository.save(prenotazione);
     }
+
 }
+

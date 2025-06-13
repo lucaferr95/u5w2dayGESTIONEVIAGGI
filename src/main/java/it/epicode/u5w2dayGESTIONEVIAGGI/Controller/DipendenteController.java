@@ -45,7 +45,7 @@ public class DipendenteController {
     @GetMapping("")
     public Page<Dipendente> getAllDipendenti(@RequestParam(defaultValue = "0") int page,
                                              @RequestParam(defaultValue = "10") int size,
-                                             @RequestParam(defaultValue = "matricola") String sortBy){
+                                             @RequestParam(defaultValue = "id") String sortBy){
         return dipendenteService.getAllDipendenti(page, size, sortBy);
     }
 
